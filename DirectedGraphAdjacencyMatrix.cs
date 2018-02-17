@@ -165,6 +165,16 @@ namespace GraphTraversal
             return _adjMatrix[getIndex(vertex1),getIndex(vertex2)] != 0;
         }
 
+        public int NumberOfTripsBetweenVerticies(char vertex1, char vertex2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int NumberOfTripsBetweenVerticies(char vertex1, char vertex2, int maxNumberOfStops)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
 

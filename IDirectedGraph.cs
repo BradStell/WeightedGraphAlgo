@@ -11,5 +11,9 @@ namespace GraphTraversal
         string CalculatePathWeight(string path);
 
         bool DoesPathExist(char vertex1, char vertex2);
+
+        int NumberOfTripsBetweenVerticies(char vertex1, char vertex2);
+
+        int NumberOfTripsBetweenVerticies(char vertex1, char vertex2, int maxNumberOfStops);
     }
 }
