@@ -8,6 +8,8 @@ namespace GraphTraversal
 
         float ShortestPathWeight(char vertex1, char vertex2);
 
-        float CalculatePathWeight(string path);
+        string CalculatePathWeight(string path);
+
+        bool DoesPathExist(char vertex1, char vertex2);
     }
 }

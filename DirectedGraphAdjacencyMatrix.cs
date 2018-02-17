@@ -123,7 +123,7 @@ namespace GraphTraversal
             return graphString;
         }
 
-        public bool Exists(char vertex)
+        public bool DoesVerticeExist(char vertex)
         {
             foreach (char vertecie in _vertices)
             {
@@ -136,20 +136,33 @@ namespace GraphTraversal
             return false;
         }
 
-        public float CalculatePathWeight(string path)
+        // I don't like casting weight as string to return
+        // however, need this to be able to return 'no such route'
+        // either that or throw exception and catch that in main and print 'no such route'
+        // but this will lead to program termination...
+        public string CalculatePathWeight(string path)
         {
             float pathWeight = 0.0f;
             string[] verticies = path.Split('-');
 
             for (int i = 0, j = 1; j < verticies.Length; i++, j++)
             {
-                if (Exists(char.Parse(verticies[i])) && Exists(char.Parse(verticies[j])))
+                if (DoesVerticeExist(char.Parse(verticies[i])) && DoesVerticeExist(char.Parse(verticies[j])) && DoesPathExist(char.Parse(verticies[i]), char.Parse(verticies[j])))
                 {
                     pathWeight += _adjMatrix[getIndex(char.Parse(verticies[i])),getIndex(char.Parse(verticies[j]))];
                 }
+                else
+                {
+                    return "NO SUCH ROUTE";
+                }
             }
 
-            return pathWeight;
+            return pathWeight.ToString();
+        }
+
+        public bool DoesPathExist(char vertex1, char vertex2)
+        {
+            return _adjMatrix[getIndex(vertex1),getIndex(vertex2)] != 0;
         }
 
         #endregion

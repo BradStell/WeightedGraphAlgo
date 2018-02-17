@@ -24,6 +24,9 @@ namespace GraphTraversal
             // Question 4: The distance of the route A-E-B-C-D
             Console.WriteLine($" The distance of A-E-B-C-D => {graph.CalculatePathWeight("A-E-B-C-D")}");
 
+            // Question 5: The distance of the route A-E-D
+            Console.WriteLine($" The distance of A-E-D => {graph.CalculatePathWeight("A-E-D")}");
+
             Console.Write(graph.ToString());
         }
         
@@ -39,12 +42,12 @@ namespace GraphTraversal
                 char vertecie2 = Char.Parse(verticeEdgeTrimmed.Substring(1, 1));
                 float weight = float.Parse(verticeEdgeTrimmed.Substring(2, verticeEdgeTrimmed.Length - 2));
 
-                if (!graph.Exists(vertecie1))
+                if (!graph.DoesVerticeExist(vertecie1))
                 {
                     graph.AddVertex(vertecie1);
                 }
 
-                if (!graph.Exists(vertecie2))
+                if (!graph.DoesVerticeExist(vertecie2))
                 {
                     graph.AddVertex(vertecie2);
                 }

@@ -26,6 +26,6 @@ namespace GraphTraversal
 
         string ToString();
 
-        bool Exists(char vertex);
+        bool DoesVerticeExist(char vertex);
     }
 }
