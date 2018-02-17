@@ -165,14 +165,50 @@ namespace GraphTraversal
             return _adjMatrix[getIndex(vertex1),getIndex(vertex2)] != 0;
         }
 
-        public int NumberOfTripsBetweenVerticies(char vertex1, char vertex2)
+        // TODO: may be better to return a BFS iterator and do this logic in calling code
+        // temp solution is to do the BFS logic combined here
+        public int NumberOfTripsBetweenVerticies(char startingVertex, char endingVertex)
         {
-            throw new NotImplementedException();
+            int numberOfTripsBetweenV1andV2 = 0;
+
+            //
+
+            return numberOfTripsBetweenV1andV2;
         }
 
-        public int NumberOfTripsBetweenVerticies(char vertex1, char vertex2, int maxNumberOfStops)
+        public int NumberOfTripsBetweenVerticies(char startingVertex, char endingVertex, int maxNumberOfStops)
         {
-            throw new NotImplementedException();
+            int numberOfTripsBetweenV1andV2 = 0;
+
+            IQueue traversalQueue = new Queue();
+            traversalQueue.Add(startingVertex);
+
+            while (!traversalQueue.IsEmpty())
+            {
+                char current = traversalQueue.Remove();
+                int currIndex = getIndex(current);
+
+                for (int i = 0; i < _vertices.Length; i++)
+                {
+                    if (_adjMatrix[currIndex, i] != 0)
+                    {
+                        traversalQueue.Add(_vertices[i]);
+
+                        if (_vertices[i] == endingVertex)
+                        {
+                            numberOfTripsBetweenV1andV2++;
+                        }
+                    }
+                }
+
+                // TODO: Figure out how to not double count same area (but we do still want to push same area in queue) ?
+                if (numberOfTripsBetweenV1andV2 > maxNumberOfStops - 2)
+                {
+                    break;
+                }
+            }
+
+            return numberOfTripsBetweenV1andV2;
         }
 
         #endregion
