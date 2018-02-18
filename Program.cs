@@ -28,7 +28,7 @@ namespace GraphTraversal
             Console.WriteLine($" The distance of A-E-D => {graph.CalculatePathWeight("A-E-D")}");
 
             // Question 6: # of trips starting at C and ending at C with <= 3 stops
-            Console.WriteLine($"# of trips from C to C => {graph.NumberOfTripsBetweenVerticies('C', 'C', 3)}");
+            Console.WriteLine($"# of trips from C to C => {graph.NumberOfTripsBetweenVerticiesDFS('C', 'C', 3)}");
 
             // Question 7: # of trips starting at A and ending at C with <= 4 stops
             Console.WriteLine($"# of trips from A to C => {graph.NumberOfTripsBetweenVerticies('A', 'C', 4)}");

@@ -226,11 +226,13 @@ namespace GraphTraversal
                 char current = traversalStack.Pop();
                 int currIndex = getIndex(current);
                 totalHops++;
+
                 for (int i = 0; i < _vertices.Length; i++)
                 {
                     if (totalHops == maxNumberOfStops)
                     {
                         totalHops = 0;
+                        //traversalStack.Pop(); // trying to prevent infinite looping
                         break;
                     }
 
