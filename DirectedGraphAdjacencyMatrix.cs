@@ -102,9 +102,9 @@ namespace GraphTraversal
                 int closestVertex = calculateMin(vertexDistances, includedSet);
                 includedSet[closestVertex] = true;
 
-                if (closestVertex == getIndex(endVertex))
+                // Short circuits for non cyclic variant 
+                if (closestVertex == getIndex(endVertex) && vertexDistances[getIndex(endVertex)] != 0)
                 {
-                    //vertexDistances[j] = vertexDistances[closestVertex] + _adjMatrix[closestVertex, j];
                     return vertexDistances[getIndex(endVertex)];
                 }
 
@@ -112,8 +112,8 @@ namespace GraphTraversal
                 {
                     if
                     (
-                        !includedSet[j] && _adjMatrix[closestVertex,j] != 0 && vertexDistances[closestVertex] != float.MaxValue &&
-                        vertexDistances[closestVertex] + _adjMatrix[closestVertex, j] < vertexDistances[j]
+                        (!includedSet[j] || vertexDistances[j] == 0) && _adjMatrix[closestVertex,j] != 0 && vertexDistances[closestVertex] != float.MaxValue &&
+                        (vertexDistances[closestVertex] + _adjMatrix[closestVertex, j] < vertexDistances[j] || vertexDistances[j] == 0)
                     )
                     {
                         vertexDistances[j] = vertexDistances[closestVertex] + _adjMatrix[closestVertex, j];
@@ -121,7 +121,7 @@ namespace GraphTraversal
                 }
             }
 
-            return 0;
+            return vertexDistances[getIndex(endVertex)];
         }
 
         public int calculateMin(float[] dist, bool[] includedSet)
