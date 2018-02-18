@@ -16,7 +16,7 @@ namespace GraphTraversal
 
         IEnumerator<char> IterateDepthFirstSearch(char startVertex);
 
-        IEnumerator<char> ShortestPath(char startVertex, char endVertex);
+        float ShortestPath(char startVertex, char endVertex);
 
         bool IsEmpty();
 

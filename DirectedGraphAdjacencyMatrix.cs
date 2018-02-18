@@ -83,9 +83,62 @@ namespace GraphTraversal
             throw new NotImplementedException();
         }
 
-        public IEnumerator<char> ShortestPath(char startVertex, char endVertex)
+        // Dijkstra's algo
+        public float ShortestPath(char startVertex, char endVertex)
         {
-            throw new NotImplementedException();
+            float[] vertexDistances = new float[_vertices.Length];
+            bool[] includedSet = new bool[_vertices.Length];
+
+            for (int i = 0; i < _vertices.Length; i++)
+            {
+                vertexDistances[i] = float.MaxValue;
+                includedSet[i] = false;
+            }
+
+            vertexDistances[getIndex(startVertex)] = 0;
+
+            for (int i = 0; i < _vertices.Length - 1; i++)
+            {
+                int closestVertex = calculateMin(vertexDistances, includedSet);
+                includedSet[closestVertex] = true;
+
+                if (closestVertex == getIndex(endVertex))
+                {
+                    //vertexDistances[j] = vertexDistances[closestVertex] + _adjMatrix[closestVertex, j];
+                    return vertexDistances[getIndex(endVertex)];
+                }
+
+                for (int j = 0; j < _vertices.Length; j++)
+                {
+                    if
+                    (
+                        !includedSet[j] && _adjMatrix[closestVertex,j] != 0 && vertexDistances[closestVertex] != float.MaxValue &&
+                        vertexDistances[closestVertex] + _adjMatrix[closestVertex, j] < vertexDistances[j]
+                    )
+                    {
+                        vertexDistances[j] = vertexDistances[closestVertex] + _adjMatrix[closestVertex, j];
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        public int calculateMin(float[] dist, bool[] includedSet)
+        {
+            float min = float.MaxValue;
+            int index = 0;
+
+            for (int i = 0; i < _vertices.Length; i++)
+            {
+                if (includedSet[i] == false && dist[i] <= min)
+                {
+                    min = dist[i];
+                    index = i;
+                }
+            }
+
+            return index;
         }
 
         public float ShortestPathWeight(char vertex1, char vertex2)
@@ -139,7 +192,7 @@ namespace GraphTraversal
         // I don't like casting weight as string to return
         // however, need this to be able to return 'no such route'
         // either that or throw exception and catch that in main and print 'no such route'
-        // but this will lead to program termination...
+        // but that will lead to program termination...
         public string CalculatePathWeight(string path)
         {
             float pathWeight = 0.0f;
@@ -165,18 +218,7 @@ namespace GraphTraversal
             return _adjMatrix[getIndex(vertex1),getIndex(vertex2)] != 0;
         }
 
-        // TODO: may be better to return a BFS iterator and do this logic in calling code
-        // temp solution is to do the BFS logic combined here
-        public int NumberOfTripsBetweenVerticies(char startingVertex, char endingVertex)
-        {
-            int numberOfTripsBetweenV1andV2 = 0;
-
-            //
-
-            return numberOfTripsBetweenV1andV2;
-        }
-
-        public int NumberOfTripsBetweenVerticies(char startingVertex, char endingVertex, int maxNumberOfStops)
+        public int NumberOfTripsBetweenVerticiesLessThanStops(char startingVertex, char endingVertex, int maxNumberOfStops)
         {
             int numberOfTripsBetweenV1andV2 = 0;
 
@@ -210,8 +252,41 @@ namespace GraphTraversal
             return numberOfTripsBetweenV1andV2;
         }
 
-        #endregion
+        public int NumberOfTripsBetweenVerticiesWithExactStops(char startingVertex, char endingVertex, int maxNumberOfStops)
+        {
+            int numberOfTripsBetweenV1andV2 = 0;
 
+            IQueue traversalQueue = new Queue();
+            traversalQueue.Add(new QNode(startingVertex, 0));
+
+            while (!traversalQueue.IsEmpty())
+            {
+                QNode current = traversalQueue.Remove();
+                int currIndex = getIndex(current.Vertex);
+
+                if (current.Depth >= maxNumberOfStops)
+                {
+                    break;
+                }
+
+                for (int i = 0; i < _vertices.Length; i++)
+                {
+                    if (_adjMatrix[currIndex, i] != 0)
+                    {
+                        traversalQueue.Add(new QNode(_vertices[i], current.Depth + 1));
+
+                        if (_vertices[i] == endingVertex && (current.Depth + 1) == maxNumberOfStops)
+                        {
+                            numberOfTripsBetweenV1andV2++;
+                        }
+                    }
+                }
+            }
+
+            return numberOfTripsBetweenV1andV2;
+        }
+
+        #endregion
 
         #region Private Methods
         private void addEdge(int index1, int index2, float weight)

@@ -28,10 +28,16 @@ namespace GraphTraversal
             Console.WriteLine($" The distance of A-E-D => {graph.CalculatePathWeight("A-E-D")}");
 
             // Question 6: # of trips starting at C and ending at C with <= 3 stops
-            Console.WriteLine($"# of trips from C to C => {graph.NumberOfTripsBetweenVerticies('C', 'C', 3)}");
+            Console.WriteLine($"# of trips from C to C => {graph.NumberOfTripsBetweenVerticiesLessThanStops('C', 'C', 3)}");
 
             // Question 7: # of trips starting at A and ending at C with <= 4 stops
-            Console.WriteLine($"# of trips from A to C => {graph.NumberOfTripsBetweenVerticies('A', 'C', 4)}");
+            Console.WriteLine($"# of trips from A to C => {graph.NumberOfTripsBetweenVerticiesWithExactStops('A', 'C', 4)}");
+
+            // Question 8: Shortest path from A-C
+            Console.WriteLine($"Shortest path from A to C => {graph.ShortestPath('A', 'C')}");
+
+            // Question 8: Shortest path from B-B
+            Console.WriteLine($"Shortest path from B to B => {graph.ShortestPath('B', 'B')}");
 
             Console.Write(graph.ToString());
         }
