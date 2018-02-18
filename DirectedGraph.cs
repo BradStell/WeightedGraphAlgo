@@ -3,36 +3,31 @@ using System.Collections.Generic;
 
 namespace GraphTraversal
 {
-    public class DirectedGraphAdjacencyMatrix : IDirectedGraph
+    public class DirectedGraph<T> : IDirectedGraph<T>
     {
         //private readonly string _graphData;
         private readonly int DEFAULT_SIZE = 2;
         private int _numberOfVerticies;
         private float[,] _adjMatrix;
-        private char[] _vertices;
+        private T[] _vertices;
 
         #region Constructors
-        public DirectedGraphAdjacencyMatrix()
+        public DirectedGraph()
         {
             _numberOfVerticies = 0;
             _adjMatrix = new float[DEFAULT_SIZE,DEFAULT_SIZE];
-            _vertices = new char[DEFAULT_SIZE];
+            _vertices = new T[DEFAULT_SIZE];
         }
 
         #endregion
 
         #region Public Interface Methods
-        public void AddEdge(char vertex1, char vertex2, float weight)
+        public void AddEdge(T vertex1, T vertex2, float weight)
         {
             addEdge(getIndex(vertex1), getIndex(vertex2), weight);
-        }        
-
-        public void AddEdge(char vertex1, char vertex2)
-        {
-            throw new NotImplementedException();
         }
 
-        public void AddVertex(char vertex)
+        public void AddVertex(T vertex)
         {
             if ((_numberOfVerticies + 1) == _adjMatrix.GetLength(0))
             {
@@ -57,31 +52,31 @@ namespace GraphTraversal
 
         public bool IsEmpty()
         {
-            throw new NotImplementedException();
+            return _numberOfVerticies == 0;
         }
 
-        public IEnumerator<char> IterateBreadthFirstSearch(char startVertex)
+        public IEnumerator<T> IterateBreadthFirstSearch(T startVertex)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerator<char> IterateDepthFirstSearch(char startVertex)
+        public IEnumerator<T> IterateDepthFirstSearch(T startVertex)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveEdge(char vertex1, char vertex2)
+        public void RemoveEdge(T vertex1, T vertex2)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveVertex(char vertex)
+        public void RemoveVertex(T vertex)
         {
             throw new NotImplementedException();
         }
 
         // Dijkstra's algo
-        public float ShortestPath(char startVertex, char endVertex)
+        public float ShortestPath(T startVertex, T endVertex)
         {
             float[] vertexDistances = new float[_numberOfVerticies];
             bool[] includedSet = new bool[_numberOfVerticies];
@@ -119,40 +114,18 @@ namespace GraphTraversal
             }
 
             return vertexDistances[getIndex(endVertex)];
-        }
-
-        public int calculateMin(float[] dist, bool[] includedSet)
-        {
-            float min = float.MaxValue;
-            int index = 0;
-
-            for (int i = 0; i < _numberOfVerticies; i++)
-            {
-                if (includedSet[i] == false && dist[i] <= min)
-                {
-                    min = dist[i];
-                    index = i;
-                }
-            }
-
-            return index;
-        }
-
-        public float ShortestPathWeight(char vertex1, char vertex2)
-        {
-            throw new NotImplementedException();
-        }
+        }        
 
         public int Size()
         {
-            throw new NotImplementedException();
+            return _numberOfVerticies;
         }
 
         public override string ToString()
         {
             string graphString = "    ";
 
-            foreach (char vert in _vertices)
+            foreach (T vert in _vertices)
             {
                 graphString += $"{vert} ";
             }
@@ -173,11 +146,11 @@ namespace GraphTraversal
             return graphString;
         }
 
-        public bool DoesVerticeExist(char vertex)
+        public bool VertexExists(T vertex)
         {
-            foreach (char vertecie in _vertices)
+            foreach (T vertecie in _vertices)
             {
-                if (vertecie == vertex)
+                if (vertecie.Equals(vertex))
                 {
                     return true;
                 }
@@ -186,45 +159,21 @@ namespace GraphTraversal
             return false;
         }
 
-        // I don't like casting weight as string to return
-        // however, need this to be able to return 'no such route'
-        // either that or throw exception and catch that in main and print 'no such route'
-        // but that will lead to program termination...
-        public string CalculatePathWeight(string path)
-        {
-            float pathWeight = 0.0f;
-            string[] verticies = path.Split('-');
-
-            for (int i = 0, j = 1; j < verticies.Length; i++, j++)
-            {
-                if (DoesVerticeExist(char.Parse(verticies[i])) && DoesVerticeExist(char.Parse(verticies[j])) && DoesPathExist(char.Parse(verticies[i]), char.Parse(verticies[j])))
-                {
-                    pathWeight += _adjMatrix[getIndex(char.Parse(verticies[i])),getIndex(char.Parse(verticies[j]))];
-                }
-                else
-                {
-                    return "NO SUCH ROUTE";
-                }
-            }
-
-            return pathWeight.ToString();
-        }
-
-        public bool DoesPathExist(char vertex1, char vertex2)
+        public bool DoesPathExist(T vertex1, T vertex2)
         {
             return _adjMatrix[getIndex(vertex1),getIndex(vertex2)] != 0;
         }
 
-        public int NumberOfTripsBetweenVerticiesLessThanStops(char startingVertex, char endingVertex, int maxNumberOfStops)
+        public int NumberOfTripsBetweenVerticiesLessThanStops(T startingVertex, T endingVertex, int maxNumberOfStops)
         {
             int numberOfTripsBetweenV1andV2 = 0;
 
-            IQueue traversalQueue = new Queue();
-            traversalQueue.Add(new QNode(startingVertex, 0));
+            IQueue<IQNode<T>> traversalQueue = new Queue<IQNode<T>>();
+            traversalQueue.Add(new QNode<T>(startingVertex, 0));
 
             while (!traversalQueue.IsEmpty())
             {
-                QNode current = traversalQueue.Remove();
+                IQNode<T> current = traversalQueue.Remove();
                 int currIndex = getIndex(current.Vertex);
 
                 if (current.Depth >= maxNumberOfStops)
@@ -236,9 +185,9 @@ namespace GraphTraversal
                 {
                     if (_adjMatrix[currIndex, i] != 0)
                     {
-                        traversalQueue.Add(new QNode(_vertices[i], current.Depth + 1));
+                        traversalQueue.Add(new QNode<T>(_vertices[i], current.Depth + 1));
 
-                        if (_vertices[i] == endingVertex)
+                        if (_vertices[i].Equals(endingVertex))
                         {
                             numberOfTripsBetweenV1andV2++;
                         }
@@ -249,21 +198,21 @@ namespace GraphTraversal
             return numberOfTripsBetweenV1andV2;
         }
 
-        public int NumberOfTripsBetweenVerticiesLessThanDistance(char startingVertex, char endingVertex, int maxDistance)
+        public int NumberOfTripsBetweenVerticiesLessThanDistance(T startingVertex, T endingVertex, int maxDistance)
         {
             return 0;
         }
 
-        public int NumberOfTripsBetweenVerticiesWithExactStops(char startingVertex, char endingVertex, int maxNumberOfStops)
+        public int NumberOfTripsBetweenVerticiesWithExactStops(T startingVertex, T endingVertex, int maxNumberOfStops)
         {
             int numberOfTripsBetweenV1andV2 = 0;
 
-            IQueue traversalQueue = new Queue();
-            traversalQueue.Add(new QNode(startingVertex, 0));
+            IQueue<IQNode<T>> traversalQueue = new Queue<IQNode<T>>();
+            traversalQueue.Add(new QNode<T>(startingVertex, 0));
 
             while (!traversalQueue.IsEmpty())
             {
-                QNode current = traversalQueue.Remove();
+                IQNode<T> current = traversalQueue.Remove();
                 int currIndex = getIndex(current.Vertex);
 
                 if (current.Depth >= maxNumberOfStops)
@@ -275,9 +224,9 @@ namespace GraphTraversal
                 {
                     if (_adjMatrix[currIndex, i] != 0)
                     {
-                        traversalQueue.Add(new QNode(_vertices[i], current.Depth + 1));
+                        traversalQueue.Add(new QNode<T>(_vertices[i], current.Depth + 1));
 
-                        if (_vertices[i] == endingVertex && (current.Depth + 1) == maxNumberOfStops)
+                        if (_vertices[i].Equals(endingVertex) && (current.Depth + 1) == maxNumberOfStops)
                         {
                             numberOfTripsBetweenV1andV2++;
                         }
@@ -286,6 +235,11 @@ namespace GraphTraversal
             }
 
             return numberOfTripsBetweenV1andV2;
+        }
+
+        public float GetPathWeight(T vertex1, T vertex2)
+        {
+            return _adjMatrix[getIndex(vertex1),getIndex(vertex2)];
         }
 
         #endregion
@@ -299,12 +253,12 @@ namespace GraphTraversal
             }
         }
 
-        private int getIndex(char vertex)
+        private int getIndex(T vertex)
         {
             int index = 0;
-            foreach (char vertice in _vertices)
+            foreach (T vertice in _vertices)
             {
-                if (vertice == vertex)
+                if (vertice.Equals(vertex))
                 {
                     return index;
                 }
@@ -327,7 +281,7 @@ namespace GraphTraversal
         private void expandCapacity()
         {
             int newSize = _vertices.Length * 2;
-            char[] newVerticies = new char[newSize];
+            T[] newVerticies = new T[newSize];
             float [,] newAdjMatrix = new float[newSize, newSize];
 
             for (int i = 0; i < _numberOfVerticies; i++)
@@ -341,6 +295,23 @@ namespace GraphTraversal
 
             _adjMatrix = newAdjMatrix;
             _vertices = newVerticies;
+        }
+
+        private int calculateMin(float[] dist, bool[] includedSet)
+        {
+            float min = float.MaxValue;
+            int index = 0;
+
+            for (int i = 0; i < _numberOfVerticies; i++)
+            {
+                if (includedSet[i] == false && dist[i] <= min)
+                {
+                    min = dist[i];
+                    index = i;
+                }
+            }
+
+            return index;
         }
 
         #endregion

@@ -2,20 +2,18 @@ using System.Collections.Generic;
 
 namespace GraphTraversal
 {
-    public interface IDirectedGraph : IGraph
+    public interface IDirectedGraph<T> : IGraph<T>
     {
-        void AddEdge(char vertex1, char vertex2, float weight);
+        void AddEdge(T vertex1, T vertex2, float weight);
 
-        float ShortestPathWeight(char vertex1, char vertex2);
+        float GetPathWeight(T vertex1, T vertex2);
 
-        string CalculatePathWeight(string path);
+        bool DoesPathExist(T vertex1, T vertex2);
 
-        bool DoesPathExist(char vertex1, char vertex2);
+        int NumberOfTripsBetweenVerticiesLessThanStops(T startingVertex, T endingVertex, int maxNumberOfStops);
 
-        int NumberOfTripsBetweenVerticiesLessThanStops(char startingVertex, char endingVertex, int maxNumberOfStops);
+        int NumberOfTripsBetweenVerticiesWithExactStops(T startingVertex, T endingVertex, int maxNumberOfStops);
 
-        int NumberOfTripsBetweenVerticiesWithExactStops(char startingVertex, char endingVertex, int maxNumberOfStops);
-
-        int NumberOfTripsBetweenVerticiesLessThanDistance(char startingVertex, char endingVertex, int maxDistance);
+        int NumberOfTripsBetweenVerticiesLessThanDistance(T startingVertex, T endingVertex, int maxDistance);
     }
 }

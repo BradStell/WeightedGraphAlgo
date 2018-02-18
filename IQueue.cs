@@ -1,10 +1,10 @@
 namespace GraphTraversal
 {
-    public interface IQueue
+    public interface IQueue<T>
     {
-        void Add(QNode item);
+        void Add(T item);
 
-        QNode Remove();
+        T Remove();
 
         bool IsEmpty();
     }

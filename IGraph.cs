@@ -2,21 +2,19 @@ using System.Collections.Generic;
 
 namespace GraphTraversal
 {
-    public interface IGraph
+    public interface IGraph<T>
     {
-        void AddVertex(char vertex);
+        void AddVertex(T vertex);
 
-        void RemoveVertex(char vertex);
+        void RemoveVertex(T vertex);
 
-        void AddEdge(char vertex1, char vertex2);
+        void RemoveEdge(T vertex1, T vertex2);
 
-        void RemoveEdge(char vertex1, char vertex2);
+        IEnumerator<T> IterateBreadthFirstSearch(T startVertex);
 
-        IEnumerator<char> IterateBreadthFirstSearch(char startVertex);
+        IEnumerator<T> IterateDepthFirstSearch(T startVertex);
 
-        IEnumerator<char> IterateDepthFirstSearch(char startVertex);
-
-        float ShortestPath(char startVertex, char endVertex);
+        float ShortestPath(T startVertex, T endVertex);
 
         bool IsEmpty();
 
@@ -24,8 +22,6 @@ namespace GraphTraversal
 
         int Size();
 
-        string ToString();
-
-        bool DoesVerticeExist(char vertex);
+        bool VertexExists(T vertex);
     }
 }

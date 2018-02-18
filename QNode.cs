@@ -1,11 +1,11 @@
 namespace GraphTraversal
 {
-    public class QNode
+    public class QNode<T> : IQNode<T>
     {
-        public char Vertex { get; set; }
+        public T Vertex { get; set; }
         public int Depth { get; set; }
 
-        public QNode(char vertex, int depth)
+        public QNode(T vertex, int depth)
         {
             Vertex = vertex;
             Depth = depth;
