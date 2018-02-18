@@ -42,6 +42,7 @@ namespace GraphTraversal
             // Question 9: # of different routes from C to C with distance less than 30
             Console.WriteLine($"# of trips from C to C with distance less than 30 => {graph.NumberOfTripsBetweenVerticiesLessThanDistance('C', 'C', 30)}");
 
+            Console.WriteLine("\nGraph Adj Matrix::\n");
             Console.Write(graph.ToString());
         }
         

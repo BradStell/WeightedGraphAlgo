@@ -10,7 +10,6 @@ namespace GraphTraversal
         private int _numberOfVerticies;
         private float[,] _adjMatrix;
         private char[] _vertices;
-        private int _count;
 
         #region Constructors
         public DirectedGraphAdjacencyMatrix()
@@ -18,7 +17,6 @@ namespace GraphTraversal
             _numberOfVerticies = 0;
             _adjMatrix = new float[DEFAULT_SIZE,DEFAULT_SIZE];
             _vertices = new char[DEFAULT_SIZE];
-            _count = 0;
         }
 
         #endregion
@@ -50,7 +48,6 @@ namespace GraphTraversal
             }
 
             _numberOfVerticies++;
-            _count++;
         }
 
         public bool IsConnected()
@@ -86,10 +83,10 @@ namespace GraphTraversal
         // Dijkstra's algo
         public float ShortestPath(char startVertex, char endVertex)
         {
-            float[] vertexDistances = new float[_vertices.Length];
-            bool[] includedSet = new bool[_vertices.Length];
+            float[] vertexDistances = new float[_numberOfVerticies];
+            bool[] includedSet = new bool[_numberOfVerticies];
 
-            for (int i = 0; i < _vertices.Length; i++)
+            for (int i = 0; i < _numberOfVerticies; i++)
             {
                 vertexDistances[i] = float.MaxValue;
                 includedSet[i] = false;
@@ -97,7 +94,7 @@ namespace GraphTraversal
 
             vertexDistances[getIndex(startVertex)] = 0;
 
-            for (int i = 0; i < _vertices.Length - 1; i++)
+            for (int i = 0; i < _numberOfVerticies - 1; i++)
             {
                 int closestVertex = calculateMin(vertexDistances, includedSet);
                 includedSet[closestVertex] = true;
@@ -108,7 +105,7 @@ namespace GraphTraversal
                     return vertexDistances[getIndex(endVertex)];
                 }
 
-                for (int j = 0; j < _vertices.Length; j++)
+                for (int j = 0; j < _numberOfVerticies; j++)
                 {
                     if
                     (
@@ -129,7 +126,7 @@ namespace GraphTraversal
             float min = float.MaxValue;
             int index = 0;
 
-            for (int i = 0; i < _vertices.Length; i++)
+            for (int i = 0; i < _numberOfVerticies; i++)
             {
                 if (includedSet[i] == false && dist[i] <= min)
                 {
@@ -162,11 +159,11 @@ namespace GraphTraversal
 
             graphString += "\n    ---------\n";
 
-            for (int i = 0; i < _vertices.Length; i++)
+            for (int i = 0; i < _numberOfVerticies; i++)
             {
                 graphString += $"{_vertices[i]} | ";
 
-                for (int j = 0; j < _vertices.Length; j++)
+                for (int j = 0; j < _numberOfVerticies; j++)
                 {
                     graphString += $"{_adjMatrix[i, j]} ";
                 }
@@ -235,7 +232,7 @@ namespace GraphTraversal
                     break;
                 }
 
-                for (int i = 0; i < _vertices.Length; i++)
+                for (int i = 0; i < _numberOfVerticies; i++)
                 {
                     if (_adjMatrix[currIndex, i] != 0)
                     {
@@ -274,7 +271,7 @@ namespace GraphTraversal
                     break;
                 }
 
-                for (int i = 0; i < _vertices.Length; i++)
+                for (int i = 0; i < _numberOfVerticies; i++)
                 {
                     if (_adjMatrix[currIndex, i] != 0)
                     {
@@ -299,7 +296,6 @@ namespace GraphTraversal
             if (isIndexValid(index1) && isIndexValid(index2) && isWeightValid(weight))
             {
                 _adjMatrix[index1, index2] = weight;
-                _count++;
             }
         }
 
@@ -320,7 +316,7 @@ namespace GraphTraversal
 
         private bool isIndexValid(int index)
         {
-            return index >= 0 && index < _count ? true : false;
+            return index >= 0 && index < _numberOfVerticies ? true : false;
         }
 
         private bool isWeightValid(float weight)
