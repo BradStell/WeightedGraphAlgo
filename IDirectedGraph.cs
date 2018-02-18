@@ -15,5 +15,7 @@ namespace GraphTraversal
         int NumberOfTripsBetweenVerticies(char startingVertex, char endingVertex);
 
         int NumberOfTripsBetweenVerticies(char startingVertex, char endingVertex, int maxNumberOfStops);
+
+        int NumberOfTripsBetweenVerticiesDFS(char startingVertex, char endingVertex, int maxNumberOfStops);
     }
 }

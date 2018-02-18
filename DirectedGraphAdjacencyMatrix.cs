@@ -179,6 +179,8 @@ namespace GraphTraversal
         public int NumberOfTripsBetweenVerticies(char startingVertex, char endingVertex, int maxNumberOfStops)
         {
             int numberOfTripsBetweenV1andV2 = 0;
+            int[] visitedDistance = new int[_vertices.Length];
+            int finishNodeIndex = getIndex(endingVertex);
 
             IQueue traversalQueue = new Queue();
             traversalQueue.Add(startingVertex);
@@ -193,6 +195,7 @@ namespace GraphTraversal
                     if (_adjMatrix[currIndex, i] != 0)
                     {
                         traversalQueue.Add(_vertices[i]);
+                        visitedDistance[i]++;
 
                         if (_vertices[i] == endingVertex)
                         {
@@ -201,10 +204,45 @@ namespace GraphTraversal
                     }
                 }
 
-                // TODO: Figure out how to not double count same area (but we do still want to push same area in queue) ?
-                if (numberOfTripsBetweenV1andV2 > maxNumberOfStops - 2)
+                if (visitedDistance[finishNodeIndex] >= maxNumberOfStops - 1)
                 {
                     break;
+                }
+            }
+
+            return numberOfTripsBetweenV1andV2;
+        }
+
+        public int NumberOfTripsBetweenVerticiesDFS(char startingVertex, char endingVertex, int maxNumberOfStops)
+        {
+            int numberOfTripsBetweenV1andV2 = 0;
+            int totalHops = -1;
+
+            IStack traversalStack = new Stack();
+            traversalStack.Push(startingVertex);
+
+            while (!traversalStack.IsEmpty())
+            {
+                char current = traversalStack.Pop();
+                int currIndex = getIndex(current);
+                totalHops++;
+                for (int i = 0; i < _vertices.Length; i++)
+                {
+                    if (totalHops == maxNumberOfStops)
+                    {
+                        totalHops = 0;
+                        break;
+                    }
+
+                    if (_adjMatrix[currIndex, i] != 0)
+                    {
+                        traversalStack.Push(_vertices[i]);
+
+                        if (_vertices[i] == endingVertex)
+                        {
+                            numberOfTripsBetweenV1andV2++;
+                        }
+                    }
                 }
             }
 
