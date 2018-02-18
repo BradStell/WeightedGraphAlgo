@@ -13,6 +13,9 @@ namespace GraphTraversal
         bool DoesPathExist(char vertex1, char vertex2);
 
         int NumberOfTripsBetweenVerticiesLessThanStops(char startingVertex, char endingVertex, int maxNumberOfStops);
+
         int NumberOfTripsBetweenVerticiesWithExactStops(char startingVertex, char endingVertex, int maxNumberOfStops);
+
+        int NumberOfTripsBetweenVerticiesLessThanDistance(char startingVertex, char endingVertex, int maxDistance);
     }
 }

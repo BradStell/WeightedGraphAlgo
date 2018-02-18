@@ -39,6 +39,9 @@ namespace GraphTraversal
             // Question 8: Shortest path from B-B
             Console.WriteLine($"Shortest path from B to B => {graph.ShortestPath('B', 'B')}");
 
+            // Question 9: # of different routes from C to C with distance less than 30
+            Console.WriteLine($"# of trips from C to C with distance less than 30 => {graph.NumberOfTripsBetweenVerticiesLessThanDistance('C', 'C', 30)}");
+
             Console.Write(graph.ToString());
         }
         

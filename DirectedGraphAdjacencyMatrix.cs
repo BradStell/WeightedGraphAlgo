@@ -252,6 +252,11 @@ namespace GraphTraversal
             return numberOfTripsBetweenV1andV2;
         }
 
+        public int NumberOfTripsBetweenVerticiesLessThanDistance(char startingVertex, char endingVertex, int maxDistance)
+        {
+            return 0;
+        }
+
         public int NumberOfTripsBetweenVerticiesWithExactStops(char startingVertex, char endingVertex, int maxNumberOfStops)
         {
             int numberOfTripsBetweenV1andV2 = 0;
