@@ -3,20 +3,20 @@ namespace GraphTraversal
     public class Queue : IQueue
     {
         private readonly int DEFAULT_SIZE = 5;
-        private char[] _queue;
+        private QNode[] _queue;
         private int _currentElement;
         private int _lastElement;
         private int _size;
 
         public Queue()
         {
-            _queue = new char[DEFAULT_SIZE];
+            _queue = new QNode[DEFAULT_SIZE];
             _currentElement = 0;
             _lastElement = -1;
             _size = 0;
         }
 
-        public void Add(char item)
+        public void Add(QNode item)
         {
             if (_lastElement + 1 == _queue.Length)
             {
@@ -29,7 +29,7 @@ namespace GraphTraversal
             _queue[_lastElement] = item;
         }
 
-        public char Remove()
+        public QNode Remove()
         {
             _size--;
             return _queue[_currentElement++];
@@ -43,7 +43,7 @@ namespace GraphTraversal
         private void expandQueue()
         {
             int newSize = _queue.Length * 2;
-            char[] newQueue = new char[newSize];
+            QNode[] newQueue = new QNode[newSize];
 
             for (int i = 0; i < _queue.Length; i++)
             {

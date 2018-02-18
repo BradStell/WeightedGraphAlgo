@@ -2,9 +2,9 @@ namespace GraphTraversal
 {
     public interface IQueue
     {
-        void Add(char item);
+        void Add(QNode item);
 
-        char Remove();
+        QNode Remove();
 
         bool IsEmpty();
     }

@@ -179,66 +179,25 @@ namespace GraphTraversal
         public int NumberOfTripsBetweenVerticies(char startingVertex, char endingVertex, int maxNumberOfStops)
         {
             int numberOfTripsBetweenV1andV2 = 0;
-            int[] visitedDistance = new int[_vertices.Length];
-            int finishNodeIndex = getIndex(endingVertex);
 
             IQueue traversalQueue = new Queue();
-            traversalQueue.Add(startingVertex);
+            traversalQueue.Add(new QNode(startingVertex, 0));
 
             while (!traversalQueue.IsEmpty())
             {
-                char current = traversalQueue.Remove();
-                int currIndex = getIndex(current);
+                QNode current = traversalQueue.Remove();
+                int currIndex = getIndex(current.Vertex);
 
-                for (int i = 0; i < _vertices.Length; i++)
-                {
-                    if (_adjMatrix[currIndex, i] != 0)
-                    {
-                        traversalQueue.Add(_vertices[i]);
-                        visitedDistance[i]++;
-
-                        if (_vertices[i] == endingVertex)
-                        {
-                            numberOfTripsBetweenV1andV2++;
-                        }
-                    }
-                }
-
-                if (visitedDistance[finishNodeIndex] >= maxNumberOfStops - 1)
+                if (current.Depth >= maxNumberOfStops)
                 {
                     break;
                 }
-            }
-
-            return numberOfTripsBetweenV1andV2;
-        }
-
-        public int NumberOfTripsBetweenVerticiesDFS(char startingVertex, char endingVertex, int maxNumberOfStops)
-        {
-            int numberOfTripsBetweenV1andV2 = 0;
-            int totalHops = -1;
-
-            IStack traversalStack = new Stack();
-            traversalStack.Push(startingVertex);
-
-            while (!traversalStack.IsEmpty())
-            {
-                char current = traversalStack.Pop();
-                int currIndex = getIndex(current);
-                totalHops++;
 
                 for (int i = 0; i < _vertices.Length; i++)
                 {
-                    if (totalHops == maxNumberOfStops)
-                    {
-                        totalHops = 0;
-                        //traversalStack.Pop(); // trying to prevent infinite looping
-                        break;
-                    }
-
                     if (_adjMatrix[currIndex, i] != 0)
                     {
-                        traversalStack.Push(_vertices[i]);
+                        traversalQueue.Add(new QNode(_vertices[i], current.Depth + 1));
 
                         if (_vertices[i] == endingVertex)
                         {
