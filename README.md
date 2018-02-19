@@ -29,8 +29,12 @@ Download the SDK for your platform
 ### Installing project dependencies
 This command will install the nuget packages for both the GraphTraversal and Tests projects  
 ```
-cd <workspace root>  
-dotnet restore
+$ cd <project root>  
+
+$ ls
+    GraphTraversal/ GraphTraversal.sln README.md Tests/
+
+$ dotnet restore
 ```  
 
 Setup is now complete, the project and unit tests can be executed. [Instructions here](#running-the-project)
