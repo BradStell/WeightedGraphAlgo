@@ -23,5 +23,7 @@ namespace GraphTraversal
         int Size();
 
         bool VertexExists(T vertex);
+
+        int GetIndex(T vertex);
     }
 }

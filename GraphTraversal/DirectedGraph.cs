@@ -242,6 +242,21 @@ namespace GraphTraversal
             return _adjMatrix[getIndex(vertex1),getIndex(vertex2)];
         }
 
+        public int GetIndex(T vertex)
+        {
+            int index = 0;
+            foreach (T vertice in _vertices)
+            {
+                if (vertice.Equals(vertex))
+                {
+                    return index;
+                }
+                index++;
+            }
+
+            return -1;
+        }
+
         #endregion
 
         #region Private Methods
@@ -253,7 +268,7 @@ namespace GraphTraversal
             }
         }
 
-        private int getIndex(T vertex)
+        public int getIndex(T vertex)
         {
             int index = 0;
             foreach (T vertice in _vertices)
