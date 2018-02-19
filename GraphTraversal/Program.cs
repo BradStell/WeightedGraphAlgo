@@ -4,9 +4,11 @@ namespace GraphTraversal
 {
     public class Program
     {
+        public static readonly string RAW_GRAPH_DATA = @"AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7";
+
         static void Main(string[] args)
         {
-            string rawGraphData = @"AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7";
+            string rawGraphData = args.Length == 1 ? args[0] : RAW_GRAPH_DATA;
 
             IDirectedGraph<char> graph = new DirectedGraph<char>();
 

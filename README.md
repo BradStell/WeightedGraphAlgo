@@ -4,8 +4,14 @@
 First follow the [building the project](#building-the-project) instructions building the project.
 
 ### Running the console program
+Pass optional graph data to program
 ```
 cd GraphTraversal  
+dotnet run -- "AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7"
+```
+If no graph data parameter is supplied the program will use a default one.  
+Example of running the program with out passing graph data
+```
 dotnet run
 ```
 
