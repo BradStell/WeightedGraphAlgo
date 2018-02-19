@@ -1,7 +1,7 @@
 ***
 ## Running the project
 
-First follow the [building the project](##buildingtheproject) instructions building the project.
+First follow the [building the project](#building-the-project) instructions building the project.
 
 ### Running the console program
 ```
@@ -33,4 +33,4 @@ cd <workspace root>
 dotnet restore
 ```  
 
-Setup is now complete, the project and unit tests can be executed. [Instructions here](##runningtheproject)
+Setup is now complete, the project and unit tests can be executed. [Instructions here](#running-the-project)
