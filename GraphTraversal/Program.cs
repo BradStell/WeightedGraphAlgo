@@ -41,11 +41,11 @@ namespace GraphTraversal
                 Console.WriteLine($" Shortest path from A to C \t | {graph.ShortestPath('A', 'C')}");
 
                 // Question 9: Shortest path from B-B
-                Console.WriteLine($"Shortest path from B to B \t | {graph.ShortestPath('B', 'B')}");
+                Console.WriteLine($" Shortest path from B to B \t | {graph.ShortestPath('B', 'B')}");
 
                 // TODO figure this $h!t out
                 // Question 10: # of different routes from C to C with distance less than 30
-                Console.WriteLine($"# of trips from C to C with distance less than 30 => {graph.NumberOfTripsBetweenVerticiesLessThanDistance('C', 'C', 30)}");
+                Console.WriteLine($" # of trips from C to C with distance less than 30 => {graph.NumberOfTripsBetweenVerticiesLessThanDistance('C', 'C', 30)}");
 
                 Console.WriteLine("\nGraph Adjacency Matrix::\n");
                 Console.Write(graph.ToString());
