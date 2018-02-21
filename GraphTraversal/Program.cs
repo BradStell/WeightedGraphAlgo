@@ -17,19 +17,19 @@ namespace GraphTraversal
                 buildGraphFromInitialState(graph, rawGraphData);
 
                 // Question 1: The distance of the route A-B-C
-                Console.WriteLine($" The distance of A-B-C \t\t | {calculatePathWeight(graph, "A-B-C")}");
+                Console.WriteLine($" The distance of A-B-C \t\t | {graph.CalculatePathWeight(new char[] {'A', 'B', 'C'})}");
 
                 // Question 2: The distance of the route A-D
-                Console.WriteLine($" The distance of A-D \t\t | {calculatePathWeight(graph, "A-D")}");
+                Console.WriteLine($" The distance of A-D \t\t | {graph.CalculatePathWeight(new char[] {'A', 'D'})}");
 
                 // Question 3: The distance of the route A-D-C
-                Console.WriteLine($" The distance of A-D-C \t\t | {calculatePathWeight(graph, "A-D-C")}");
+                Console.WriteLine($" The distance of A-D-C \t\t | {graph.CalculatePathWeight(new char[] {'A', 'D', 'C'})}");
 
                 // Question 4: The distance of the route A-E-B-C-D
-                Console.WriteLine($" The distance of A-E-B-C-D \t | {calculatePathWeight(graph, "A-E-B-C-D")}");
+                Console.WriteLine($" The distance of A-E-B-C-D \t | {graph.CalculatePathWeight(new char[] {'A', 'E', 'B', 'C', 'D'})}");
 
                 // Question 5: The distance of the route A-E-D
-                Console.WriteLine($" The distance of A-E-D \t\t | {calculatePathWeight(graph, "A-E-D")}");
+                Console.WriteLine($" The distance of A-E-D \t\t | {graph.CalculatePathWeight(new char[] {'A', 'E', 'D'})}");
 
                 // Question 6: # of trips starting at C and ending at C with <= 3 stops
                 Console.WriteLine($" # of trips from C to C \t | {graph.NumberOfTripsBetweenVerticiesLessThanStops('C', 'C', 3)}");
@@ -55,26 +55,6 @@ namespace GraphTraversal
                 Console.WriteLine("There was an error with the way the application was called. Please try again");
                 Console.WriteLine($"\n***********************\nError message:\n\t{ex.Message}\n\n");
             }
-        }
-
-        public static string calculatePathWeight(IDirectedGraph<char> graph, string path)
-        {
-            float pathWeight = 0.0f;
-            string[] verticies = path.Split('-');
-
-            for (int i = 0, j = 1; j < verticies.Length; i++, j++)
-            {
-                if (graph.VertexExists(char.Parse(verticies[i])) && graph.VertexExists(char.Parse(verticies[j])) && graph.DoesPathExist(char.Parse(verticies[i]), char.Parse(verticies[j])))
-                {
-                    pathWeight += graph.GetPathWeight(char.Parse(verticies[i]), char.Parse(verticies[j]));
-                }
-                else
-                {
-                    return "NO SUCH ROUTE";
-                }
-            }
-
-            return pathWeight.ToString();
         }
         
         public static void buildGraphFromInitialState(IDirectedGraph<char> graph, string rawGraphData)

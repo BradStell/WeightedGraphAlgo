@@ -29,20 +29,23 @@ namespace GraphTraversal
 
         public void AddVertex(T vertex)
         {
-            if ((_numberOfVerticies + 1) == _adjMatrix.GetLength(0))
+            if (!VertexExists(vertex))
             {
-                expandCapacity();
+                if ((_numberOfVerticies + 1) == _adjMatrix.GetLength(0))
+                {
+                    expandCapacity();
+                }
+
+                _vertices[_numberOfVerticies] = vertex;
+
+                for (int i = 0; i < _numberOfVerticies; i++)
+                {
+                    _adjMatrix[_numberOfVerticies, i] = 0;
+                    _adjMatrix[i, _numberOfVerticies] = 0;
+                }
+
+                _numberOfVerticies++;
             }
-
-            _vertices[_numberOfVerticies] = vertex;
-
-            for (int i = 0; i < _numberOfVerticies; i++)
-            {
-                _adjMatrix[_numberOfVerticies, i] = 0;
-                _adjMatrix[i, _numberOfVerticies] = 0;
-            }
-
-            _numberOfVerticies++;
         }
 
         public bool IsConnected()
@@ -196,6 +199,25 @@ namespace GraphTraversal
             }
 
             return numberOfTripsBetweenV1andV2;
+        }
+
+        public string CalculatePathWeight(T[] path)
+        {
+            float pathWeight = 0.0f;
+
+            for (int i = 0, j = 1; j < path.Length; i++, j++)
+            {
+                if (VertexExists(path[i]) && VertexExists(path[j]) && DoesPathExist(path[i], path[j]))
+                {
+                    pathWeight += GetPathWeight(path[i], path[j]);
+                }
+                else
+                {
+                    return "NO SUCH ROUTE";
+                }
+            }
+
+            return pathWeight.ToString();
         }
 
         public int NumberOfTripsBetweenVerticiesLessThanDistance(T startingVertex, T endingVertex, int maxDistance)

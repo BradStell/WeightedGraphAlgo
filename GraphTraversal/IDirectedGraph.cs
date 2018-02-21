@@ -10,6 +10,8 @@ namespace GraphTraversal
 
         bool DoesPathExist(T vertex1, T vertex2);
 
+        string CalculatePathWeight(T[] path);
+
         int NumberOfTripsBetweenVerticiesLessThanStops(T startingVertex, T endingVertex, int maxNumberOfStops);
 
         int NumberOfTripsBetweenVerticiesWithExactStops(T startingVertex, T endingVertex, int maxNumberOfStops);
