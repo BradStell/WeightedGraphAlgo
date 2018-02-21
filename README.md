@@ -1,7 +1,7 @@
 ***
 ## Running the project
 
-First follow the [building the project](#building-the-project) instructions building the project.
+First follow the [building the project](#building-the-project) instructions.
 
 ### Running the console program
 Pass optional graph data to program
@@ -24,6 +24,7 @@ dotnet test
 ***
 
 ## Building the project
+This project was written in C# on dotnet core 2.1.3
 
 ### Installing dotnet core SDK
 Download the SDK for your platform  
