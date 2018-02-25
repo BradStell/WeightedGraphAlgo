@@ -71,15 +71,8 @@ namespace GraphTraversal
                     char vertecie2 = Char.Parse(verticeEdgeTrimmed.Substring(1, 1));
                     float weight = float.Parse(verticeEdgeTrimmed.Substring(2, verticeEdgeTrimmed.Length - 2));
 
-                    if (!graph.VertexExists(vertecie1))
-                    {
-                        graph.AddVertex(vertecie1);
-                    }
-
-                    if (!graph.VertexExists(vertecie2))
-                    {
-                        graph.AddVertex(vertecie2);
-                    }
+                    graph.AddVertex(vertecie1);
+                    graph.AddVertex(vertecie2);
 
                     graph.AddEdge(vertecie1, vertecie2, weight);
                 }
